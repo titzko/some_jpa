@@ -5,25 +5,25 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MyUser {
+public class BasketItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String firstName;
-    private String secondName;
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
+    @ManyToOne
+    @JoinColumn(name = "basket_id")
     private Basket basket;
+    private int quantity;
 
-    public MyUser(String firstName, String secondName) {
-        this.firstName = firstName;
-        this.secondName = secondName;
+    public BasketItem(Product product, int quantity) {
+        this.product = product;
+        this.quantity = quantity;
     }
 }

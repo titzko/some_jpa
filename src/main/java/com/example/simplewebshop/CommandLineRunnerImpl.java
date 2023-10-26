@@ -1,13 +1,17 @@
 package com.example.simplewebshop;
 
+import com.example.simplewebshop.model.Basket;
+import com.example.simplewebshop.model.BasketItem;
 import com.example.simplewebshop.model.MyUser;
 import com.example.simplewebshop.model.Product;
+import com.example.simplewebshop.persistence.BasketRepository;
 import com.example.simplewebshop.persistence.ProductRepository;
 import com.example.simplewebshop.persistence.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -16,21 +20,26 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
 
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
+    private final BasketRepository basketRepository;
 
 
     @Override
     public void run(String... args) throws Exception {
         List<MyUser> myUsers = createMockUser();
         List<Product> products = createMockProducts();
+        List<Basket> baskets = new ArrayList<>();
 
-        for(int i=0; i<myUsers.size(); i++) {
-            List<Product> selectedProducts = List.of(products.get(i), products.get(i+2));
-            myUsers.get(i).setProducts(selectedProducts);
+        for (int i = 0; i < myUsers.size(); i++) {
+            Basket basket = new Basket();
+            basket.setUser(myUsers.get(i));
+            basket.addBasketItem(new BasketItem(products.get(i), i+2));
+            basket.addBasketItem(new BasketItem(products.get(i+2), i*2+1));
+            baskets.add(basket);
         }
 
         productRepository.saveAll(products);
         userRepository.saveAll(myUsers);
-
+        basketRepository.saveAll(baskets);
     }
 
 
