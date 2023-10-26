@@ -12,18 +12,23 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MyUser {
+public class Basket {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String firstName;
-    private String secondName;
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private Basket basket;
 
-    public MyUser(String firstName, String secondName) {
-        this.firstName = firstName;
-        this.secondName = secondName;
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private MyUser user;
+    @OneToMany(mappedBy = "basket", cascade = CascadeType.ALL, orphanRemoval = true)
+    List<BasketItem> basketItems = new ArrayList<>();
+
+
+    public void addBasketItem(BasketItem item) {
+        this.basketItems.add(item);
+        item.setBasket(this);
     }
 }
+
+

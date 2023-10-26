@@ -1,6 +1,8 @@
 package com.example.simplewebshop.controller;
 
+import com.example.simplewebshop.model.Basket;
 import com.example.simplewebshop.model.MyUser;
+import com.example.simplewebshop.persistence.BasketRepository;
 import com.example.simplewebshop.persistence.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -14,12 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 public class WebShopController {
 
-    private final UserRepository userRepository;
+    private final BasketRepository basketRepository;
 
     @GetMapping("/{userId}/basket")
     public String getBasket(@PathVariable Long userId, Model model) {
-        MyUser user = userRepository.findById(userId).orElse(null);
-        model.addAttribute("user", user);
+        model.addAttribute("basket", this.basketRepository.findBasketByUserId(userId));
         return "basket";
     }
 
