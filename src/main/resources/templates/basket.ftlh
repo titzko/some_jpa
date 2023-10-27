@@ -10,9 +10,10 @@
 <body style="display: flex; justify-content: center; align-items: center; margin-top: 35px; font-size: 22px;">
 <#if basket??>
     <div>
-        This is the basket for the user <b>${basket.user.firstName + " " + basket.user.secondName}</b>
+        <h2>This is the basket for the user ${basket.user.firstName + " " + basket.user.secondName}</h2>
 
         <p>${basket.user.firstName} has the following products in his basket</p>
+        <div><b>Status:</b> ${basket.status}</div>
 
         <ul>
             <#list basket.basketItems![] as basketItem>

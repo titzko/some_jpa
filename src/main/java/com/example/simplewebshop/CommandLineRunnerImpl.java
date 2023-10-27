@@ -4,6 +4,7 @@ import com.example.simplewebshop.model.Basket;
 import com.example.simplewebshop.model.BasketItem;
 import com.example.simplewebshop.model.MyUser;
 import com.example.simplewebshop.model.Product;
+import com.example.simplewebshop.model.Status;
 import com.example.simplewebshop.persistence.BasketRepository;
 import com.example.simplewebshop.persistence.ProductRepository;
 import com.example.simplewebshop.persistence.UserRepository;
@@ -34,6 +35,7 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
             basket.setUser(myUsers.get(i));
             basket.addBasketItem(new BasketItem(products.get(i), i+2));
             basket.addBasketItem(new BasketItem(products.get(i+2), i*2+1));
+            basket.setStatus(Status.CHECKOUT);
             baskets.add(basket);
         }
 

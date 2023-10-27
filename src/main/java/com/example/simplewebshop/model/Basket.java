@@ -22,7 +22,8 @@ public class Basket {
     @JoinColumn(name = "user_id")
     private MyUser user;
     @OneToMany(mappedBy = "basket", cascade = CascadeType.ALL, orphanRemoval = true)
-    List<BasketItem> basketItems = new ArrayList<>();
+    private List<BasketItem> basketItems = new ArrayList<>();
+    private Status status;
 
 
     public void addBasketItem(BasketItem item) {
